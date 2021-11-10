@@ -1,4 +1,4 @@
-```pyuthon
+```python
 #coding=gbk
 
 '''
@@ -42,5 +42,38 @@ rename()方法语法格式如下
 os.rename(src, dst)
 os.rename() 方法用于命名文件或目录，从 src 到 dst,如果dst是一个存在的目录, 将抛出OSError。
 '''
+
+```
+
+修改多文件夹下的文件
+```python
+
+#coding=gbk
+import os
+import sys
+def rename(number):
+    i = 1
+    allpath = 'C:/Users/86187/Pictures/api图库/'  # 要修改的文件夹总路径
+    while i <= number:
+        path = os.path.join(allpath,"api_"+str(i))#我的文件夹命名也是顺序的，所以依次遍历每个文件夹即可
+        print(path)
+        name = 'img' #文件名前缀
+        startNumber = 1 #开始的序号 比如 img1
+        fileType = '.jpg' #文件名后缀
+        cnt = 0
+        for files in os.listdir(path): #os.listdir 获取该目录下的文件名 以list返回
+            Olddir = os.path.join(path,files) #路径拼接 因为我们是要通过确定的位置去修改文件名
+            if os.path.isdir(Olddir):
+                continue
+            Newdir=os.path.join(path,name+str(cnt+int(startNumber))+fileType)
+            os.rename(Olddir,Newdir)
+            cnt+=1
+        i+=1
+        print("修改成功，可以打开文件夹查看")
+
+
+
+if __name__ == '__main__':
+    rename(4)
 
 ```
