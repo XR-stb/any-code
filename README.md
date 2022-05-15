@@ -1,4 +1,4 @@
-# -
+# 一些小代码
 记录一些小的demo，包括python js， cpp， java等  
 
 目前已有的内容  
