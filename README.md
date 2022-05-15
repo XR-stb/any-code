@@ -1,2 +1,2 @@
 # -
-随手写的脚本或者代码，算法啥的
+记录一些小的demo，包括python js， cpp， java等
