@@ -10,6 +10,9 @@
 (function () {
     'use strict';
     // 测试问卷：https://www.wjx.cn/vm/evhqCAf.aspx
+
+    let webdriver = navigator.webdriver; // 用于判断是否爬虫
+
     Init();
 
     //获取题块列表
@@ -253,11 +256,13 @@
     }
 
     function Init() {
+        ClickAiCheck();
+        RefreshPageIfNotChange
         RedirectVmToVj();
         clearCookie();
+
         var wenjuan_url = GetCurUrl();
         wenjuan_url = ReplaceVmWithVj(wenjuan_url)
-
         //下边的网址不要改, 用于提交完问卷后返回
         if (window.location.href.indexOf('https://www.wjx.cn/wjx/join/complete.aspx') != -1) {
             window.location.href = wenjuan_url;
@@ -265,8 +270,47 @@
         } else {
             return
         }
-
         //滚动到末尾
         window.scrollTo(0, document.body.scrollHeight)
+    }
+
+    // 刷新页面
+    function RefreshPage() {
+        location.reload();
+    }
+
+    function RefreshPageIfNotChange() {
+        let idleTimer;
+        const idleTime = 5000; // 设置空闲时间，单位为毫秒
+
+        function resetIdleTimer() {
+            clearTimeout(idleTimer);
+            idleTimer = setTimeout(function () {
+                RefreshPage();
+            }, idleTime);
+        }
+
+        // 监听鼠标移动、键盘输入和滚动事件
+        document.addEventListener('mousemove', resetIdleTimer);
+        document.addEventListener('keydown', resetIdleTimer);
+        document.addEventListener('scroll', resetIdleTimer);
+    }
+
+    function ClickAiCheck() {
+        // 每隔两秒钟执行一次检查和点击操作
+        setInterval(CheckAndClickButton, 4000);
+    }
+
+    function CheckAndClickButton() {
+        // 判断按钮是否存在
+        var confirmButton = document.querySelector('.mainBgColor');
+    
+        // 如果按钮存在，执行点击操作
+        if (confirmButton) {
+            confirmButton.click();
+            // alert('按钮被点击了！');
+        } else {
+            // alert('按钮不存在。');
+        }
     }
 })();
