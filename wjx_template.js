@@ -117,6 +117,7 @@
     function HandleFillInBlankTemplate(answers, probability) {
         var content = answers[SingleChooseIdx(probability)];
         document.querySelector('#q' + all_question_idx).value = content;
+        all_question_idx += 1;
     }
 
     function handleQuestion(type, probability, min_options = 1) {
