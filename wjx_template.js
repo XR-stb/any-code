@@ -16,12 +16,14 @@
     Init();
 
     //获取题块列表
-    var question_lists = document.querySelectorAll('.ulradiocheck')
-    var quesion_idx = 0; // from zero
+    var choose_question_list = document.querySelectorAll('.ulradiocheck')
+    var all_question_idx = 1; // 用于填空题构造 id，对齐自然数从1开始计数
+    var choose_question_idx = 0; // 选择题在list中的下标
     var probability; // 每个选项的概率，总和为：100
     var answer_contents; // 填空题答案
     var min_options;
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /*
     probability = [40, 30, 20, 10];
     handleQuestion('single', probability);
     // Multiple Choice
@@ -33,6 +35,11 @@
     answer_contents = ['王翠花', '小明', '小红'];
     probability = [33, 33, 34];
     HandleFillInBlankTemplate(answer_contents, probability);
+    */
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     function yanzhen() {
@@ -64,9 +71,9 @@
         }, 0.1 * 1000);
     }, 0.1 * 1000);
 
-    // 获取题目选项
+    // 获取选择题题目选项
     function GetOptions() {
-        return question_lists[quesion_idx].querySelectorAll('li')
+        return choose_question_list[choose_question_idx].querySelectorAll('li')
     }
 
     // 单选
@@ -74,7 +81,8 @@
         var choose_idx = SingleChooseIdx(probability);
         var options = GetOptions();
         options[choose_idx].click();
-        quesion_idx += 1;
+        all_question_idx += 1;
+        choose_question_idx += 1;
     }
 
     // 多选
@@ -101,14 +109,14 @@
                 }
             }
         }
-        quesion_idx += 1;
+        all_question_idx += 1;
+        choose_question_idx += 1;
     }
 
     // 填空
     function HandleFillInBlankTemplate(answers, probability) {
         var content = answers[SingleChooseIdx(probability)];
-        quesion_idx += 1; // 填空题是选择是id，并且加题号，所以下标要提前+1，对标自然题号
-        document.querySelector('#q' + quesion_idx).value = content;
+        document.querySelector('#q' + all_question_idx).value = content;
     }
 
     function handleQuestion(type, probability, min_options = 1) {
